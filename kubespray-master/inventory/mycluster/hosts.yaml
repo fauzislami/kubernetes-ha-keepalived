@@ -1,0 +1,46 @@
+all:
+  hosts:
+    master-1.lab-home.com:
+      ansible_host: 192.168.1.101
+      ip: 192.168.1.101
+      access_ip: 192.168.1.101
+    master-2.lab-home.com:
+      ansible_host: 192.168.1.103
+      ip: 192.168.1.103
+      access_ip: 192.168.1.103
+    master-3.lab-home.com:
+      ansible_host: 192.168.1.105
+      ip: 192.168.1.105
+      access_ip: 192.168.1.105
+    worker-1.lab-home.com:
+      ansible_host: 192.168.1.115
+      ip: 192.168.1.115
+      access_ip: 192.168.1.115
+    worker-2.lab-home.com:
+      ansible_host: 192.168.1.124
+      ip: 192.168.1.124
+      access_ip: 192.168.1.124
+  children:
+    kube_control_plane:
+      hosts:
+        master-1.lab-home.com:
+        master-2.lab-home.com:
+        master-3.lab-home.com:        
+    kube_node:
+      hosts:
+        master-1.lab-home.com:
+        master-2.lab-home.com:
+        master-3.lab-home.com:
+        worker-1.lab-home.com:
+        worker-2.lab-home.com:
+    etcd:
+      hosts:
+        master-1.lab-home.com:
+        master-2.lab-home.com:
+        master-3.lab-home.com:
+    k8s_cluster:
+      children:
+        kube_control_plane:
+        kube_node:
+    calico_rr:
+      hosts: {}
